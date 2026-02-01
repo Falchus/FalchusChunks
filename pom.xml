@@ -1,0 +1,111 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>com.falchus</groupId>
+  <artifactId>chunks</artifactId>
+  <version>1.0.0</version>
+  
+<properties>
+  	<maven.compiler.source>25</maven.compiler.source>
+  	<maven.compiler.target>25</maven.compiler.target>
+  	<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+  	<lombok.version>1.18.42</lombok.version>
+  </properties>
+  
+  <repositories>
+    <repository>
+        <id>papermc-repo</id>
+        <url>https://repo.papermc.io/repository/maven-public/</url>
+    </repository>
+  	<repository>
+  		<id>spigotmc-repo</id>
+  		<url>https://hub.spigotmc.org/nexus/content/repositories/snapshots/</url>
+  	</repository>
+  	<repository>
+  		<id>cs-arcanearts</id>
+  		<url>https://dl.cloudsmith.io/public/arcane/archive/maven/</url>
+  	</repository>
+  	<repository>
+  		<id>falchus.com</id>
+  		<url>https://repo.falchus.com/releases</url>
+  	</repository>
+  </repositories>
+  
+  <dependencies>
+  	<dependency>
+  		<groupId>com.falchus</groupId>
+  		<artifactId>lib-java</artifactId>
+  		<version>[1.0.0,)</version>
+  		<scope>provided</scope>
+  	</dependency>
+  
+	<dependency>
+  		<groupId>org.projectlombok</groupId>
+  		<artifactId>lombok</artifactId>
+  		<version>${lombok.version}</version>
+  		<scope>provided</scope>
+  	</dependency>
+
+	<dependency>
+		<groupId>org.bukkit.craftbukkit</groupId>
+		<artifactId>1.8.8</artifactId>
+		<version>1.8.8</version>
+		<scope>provided</scope>
+	</dependency>
+	<dependency>
+		<groupId>org.spigotmc</groupId>
+		<artifactId>spigot-api</artifactId>
+		<version>1.8.8-R0.1-SNAPSHOT</version>
+		<scope>provided</scope>
+	</dependency>
+  </dependencies>
+  
+  <build>
+    <sourceDirectory>src</sourceDirectory>
+    <resources>
+      <resource>
+        <directory>src</directory>
+        <includes>
+        	<include>plugin.yml</include>
+        </includes>
+        <excludes>
+          <exclude>**/*.java</exclude>
+        </excludes>
+        <filtering>true</filtering>
+      </resource>
+    </resources>
+    <finalName>FalchusChunks</finalName>
+    <plugins>
+		<plugin>
+			<groupId>org.apache.maven.plugins</groupId>
+			<artifactId>maven-compiler-plugin</artifactId>
+			<version>3.14.1</version>
+			<configuration>
+				<annotationProcessorPaths>
+					<path>
+						<groupId>org.projectlombok</groupId>
+						<artifactId>lombok</artifactId>
+						<version>${lombok.version}</version>
+					</path>
+				</annotationProcessorPaths>
+			</configuration>
+		</plugin>
+		
+		<plugin>
+			<groupId>org.apache.maven.plugins</groupId>
+			<artifactId>maven-shade-plugin</artifactId>
+			<version>3.6.1</version>
+			<executions>
+				<execution>
+					<phase>package</phase>
+					<goals>
+						<goal>shade</goal>
+					</goals>
+					<configuration>
+						<createDependencyReducedPom>false</createDependencyReducedPom>
+					</configuration>
+				</execution>
+			</executions>
+		</plugin>
+    </plugins>
+  </build>
+</project>
