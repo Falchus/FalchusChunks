@@ -7,6 +7,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.world.ChunkUnloadEvent;
 
 import com.falchus.chunks.Main;
+import com.falchus.chunks.tasks.GenerateTask.ChunkCoord;
 
 public class ChunkUnloadListener implements Listener {
 
@@ -19,7 +20,8 @@ public class ChunkUnloadListener implements Listener {
 	@EventHandler
 	public void onChunkUnload(ChunkUnloadEvent event) {
 		Chunk chunk = event.getChunk();
-		if (plugin.getChunkManager().getChunks().contains(chunk)) {
+		ChunkCoord coord = new ChunkCoord(chunk.getX(), chunk.getZ());
+		if (plugin.getChunkManager().getChunks().contains(coord)) {
 			event.setCancelled(true);
 		}
 	}

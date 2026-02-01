@@ -67,16 +67,9 @@ public class GenerateTask implements Runnable {
 	    	if (!world.isChunkLoaded(coord.x, coord.z)) {
 	    		queue.poll();
 	    		
-	            for (int x = -1; x <= 1; x++) {
-	                for (int z = -1; z <= 1; z++) {
-	                    int targetX = coord.x + x;
-	                    int targetZ = coord.z + z;
-
-	                    if (!unloadable) {
-	                        plugin.getChunkManager().getChunks().add(world.getChunkAt(targetX, targetZ));
-	                    }
-	                }
-	            }
+                if (!unloadable) {
+                    plugin.getChunkManager().getChunks().add(coord);
+                }
 	            
 		        int bx = (coord.x << 4) + 8;
 		        int bz = (coord.z << 4) + 8;
@@ -112,7 +105,7 @@ public class GenerateTask implements Runnable {
 	}
 	
 	@AllArgsConstructor
-	private static class ChunkCoord {
+	public static class ChunkCoord {
 		
 		final int x;
 		final int z;

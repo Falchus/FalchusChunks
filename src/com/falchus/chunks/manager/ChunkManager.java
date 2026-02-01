@@ -3,9 +3,8 @@ package com.falchus.chunks.manager;
 import java.util.HashSet;
 import java.util.Set;
 
-import org.bukkit.Chunk;
-
 import com.falchus.chunks.Main;
+import com.falchus.chunks.tasks.GenerateTask.ChunkCoord;
 
 import lombok.Getter;
 
@@ -14,5 +13,5 @@ public class ChunkManager {
 
 	private final Main plugin = Main.getInstance();
 	
-	private final Set<Chunk> chunks = new HashSet<>();
+	private final Set<ChunkCoord> chunks = new HashSet<>();
 }
