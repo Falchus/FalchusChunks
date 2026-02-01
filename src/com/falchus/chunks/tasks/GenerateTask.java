@@ -75,8 +75,7 @@ public class GenerateTask implements Runnable {
 		        int bz = (coord.z << 4) + 8;
 		        int y = 100;
 		        
-		        String command = String.format((Bukkit.getName().equals("FalchusSpigot") ? "falchus" : "") + "spigot:tp %s %f %d %f", player.getName(), bx + 0.5, y, bz + 0.5);
-		        Bukkit.dispatchCommand(Bukkit.getConsoleSender(), command); // async in FalchusSpigot
+		        Bukkit.dispatchCommand(Bukkit.getConsoleSender(), (Bukkit.getName().equals("FalchusSpigot") ? "falchus" : "") + "spigot:tp " + player.getName() + " " + (bx + 0.5) + " " + y + " " + (bz + 0.5)); // async in FalchusSpigot
 		
 				processed++;
 				
