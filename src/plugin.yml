@@ -3,8 +3,8 @@ version: ${project.version}
 description: A blazingly fast chunk generator.
 main: com.falchus.chunks.Main
 author: Falchus
+website: falchus.com/chunks
 
-load: startup
 depend: [FalchusLib]
 
 commands:
