@@ -6,6 +6,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 import com.falchus.chunks.commands.GenerateCommand;
 import com.falchus.chunks.listeners.*;
 import com.falchus.chunks.manager.*;
+import com.falchus.lib.minecraft.spigot.utils.Metrics;
 
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -31,6 +32,7 @@ public class Main extends JavaPlugin {
 	@Override
 	public void onEnable() {
 		instance = this;
+		new Metrics(this, 29228);
 
 		Bukkit.getScheduler().runTask(this, () -> {
 			chunkUnloadListener = new ChunkUnloadListener();
