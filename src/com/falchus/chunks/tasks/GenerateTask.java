@@ -6,6 +6,7 @@ import java.util.Queue;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.Location;
+import org.bukkit.World;
 import org.bukkit.entity.Player;
 
 import com.falchus.chunks.Main;
@@ -35,9 +36,15 @@ public class GenerateTask implements Runnable {
         int chunkRadius = radius >> 4;
         int cx = player.getLocation().getBlockX() >> 4;
         int cz = player.getLocation().getBlockZ() >> 4;
+        World world = player.getWorld();
         for (int x = -chunkRadius; x <= chunkRadius; x++) {
             for (int z = -chunkRadius; z <= chunkRadius; z++) {
-                queue.add(new ChunkCoord(cx + x, cz + z));
+            	int targetX = cx + x;
+            	int targetZ = cz + z;
+            	
+            	if (!world.isChunkLoaded(targetX, targetZ)) {
+            		queue.add(new ChunkCoord(targetX, targetZ));
+            	}
             }
         }
         
