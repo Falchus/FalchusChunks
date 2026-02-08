@@ -37,13 +37,19 @@ public class GenerateTask implements Runnable {
         int cx = player.getLocation().getBlockX() >> 4;
         int cz = player.getLocation().getBlockZ() >> 4;
         World world = player.getWorld();
+        int viewDistance = Bukkit.getViewDistance();
         for (int x = -chunkRadius; x <= chunkRadius; x++) {
             for (int z = -chunkRadius; z <= chunkRadius; z++) {
             	int targetX = cx + x;
             	int targetZ = cz + z;
             	
-            	if (!world.isChunkLoaded(targetX, targetZ)) {
-            		queue.add(new ChunkCoord(targetX, targetZ));
+            	ChunkCoord coord = new ChunkCoord(targetX, targetZ);
+            	if (plugin.getChunkManager().getChunks().contains(coord)) continue;
+            	
+            	if (world.isChunkLoaded(targetX, targetZ)) continue;
+            	
+            	if (Math.abs(x) > viewDistance && Math.abs(z) > viewDistance) {
+            		queue.add(coord);
             	}
             }
         }
