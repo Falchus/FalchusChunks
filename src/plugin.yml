@@ -1,5 +1,6 @@
 name: FalchusChunks
 version: ${project.version}
+api-version: 1.13
 description: A blazingly fast chunk generator.
 main: com.falchus.chunks.Main
 author: Falchus
