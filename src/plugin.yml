@@ -4,6 +4,7 @@ api-version: 1.13
 description: A blazingly fast chunk generator.
 main: com.falchus.chunks.Main
 author: Falchus
+authors: [Kalibrier, Roma]
 website: falchus.com/chunks
 
 depend: [FalchusLib]
