@@ -2,6 +2,7 @@ package com.falchus.chunks.tasks;
 
 import java.util.ArrayDeque;
 import java.util.Queue;
+import java.util.concurrent.TimeUnit;
 
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
@@ -10,6 +11,7 @@ import org.bukkit.World;
 import org.bukkit.entity.Player;
 
 import com.falchus.chunks.Main;
+import com.falchus.lib.task.Task;
 
 import lombok.AllArgsConstructor;
 
@@ -64,9 +66,9 @@ public class GenerateTask implements Runnable {
     	player.setGameMode(GameMode.SPECTATOR);
     	player.sendMessage(Main.prefix + "Generating §a" + total + " §7chunks. Do not leave!");
     	
-    	taskId = Bukkit.getScheduler()
-    			.runTaskTimer(plugin, this, 0, 1)
-    			.getTaskId();
+    	taskId = Task
+    			.runTaskTimer(this, 100, TimeUnit.MILLISECONDS)
+    			.getId();
     }
 	
 	@Override
@@ -97,7 +99,7 @@ public class GenerateTask implements Runnable {
 	}
 	
 	private void finish() {
-		Bukkit.getScheduler().cancelTask(taskId);
+		Task.end(taskId);
 		
 		player.teleport(originalLocation);
 		player.setGameMode(originalGamemode);
