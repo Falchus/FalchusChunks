@@ -16,7 +16,7 @@ import lombok.experimental.FieldDefaults;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class Main extends JavaPlugin {
 
-	static Main instance;
+	@Getter static Main instance;
 
 	ChunkUnloadListener chunkUnloadListener;
 	ChunkManager chunkManager;
@@ -40,9 +40,5 @@ public class Main extends JavaPlugin {
 			
 			getCommand("generate").setExecutor(new GenerateCommand());
 		});
-	}
-	
-	public static Main getInstance() {
-		return instance;
 	}
 }

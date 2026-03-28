@@ -14,12 +14,11 @@ public class GenerateCommand extends SpigotCommandAdapter {
 
 	@Override
 	public void executeCommand(Object sender, String[] args) {
+		if (!(sender instanceof Player player)) return;
 		if (args.length != 1 && args.length != 2) {
 			sendMessage(sender, getUsageMessage());
 			return;
 		}
-		
-		if (!(sender instanceof Player player)) return;
 		
 		int radius;
 		try {
