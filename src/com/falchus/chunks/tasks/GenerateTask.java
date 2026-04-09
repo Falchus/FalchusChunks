@@ -67,7 +67,7 @@ public class GenerateTask implements Runnable {
     	player.sendMessage(Main.prefix + "Generating §a" + total + " §7chunks. Do not leave!");
     	
     	taskId = Task
-    			.runTaskTimer(this, 100, TimeUnit.MILLISECONDS)
+    			.runTimer(this, 100, TimeUnit.MILLISECONDS)
     			.getId();
     }
 	
