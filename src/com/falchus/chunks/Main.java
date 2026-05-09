@@ -3,7 +3,7 @@ package com.falchus.chunks;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import com.falchus.chunks.commands.GenerateCommand;
+import com.falchus.chunks.commands.*;
 import com.falchus.chunks.listeners.*;
 import com.falchus.chunks.manager.*;
 import com.falchus.lib.minecraft.spigot.utils.Metrics;
