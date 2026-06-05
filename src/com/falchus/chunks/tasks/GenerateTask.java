@@ -13,8 +13,6 @@ import org.bukkit.entity.Player;
 import com.falchus.chunks.Main;
 import com.falchus.lib.task.Task;
 
-import lombok.AllArgsConstructor;
-
 public class GenerateTask implements Runnable {
 	
 	private final Main plugin = Main.getInstance();
@@ -107,10 +105,5 @@ public class GenerateTask implements Runnable {
 		player.sendMessage(Main.prefix + "Generated §a" + processed + " §7chunks.");
 	}
 	
-	@AllArgsConstructor
-	public static class ChunkCoord {
-		
-		final int x;
-		final int z;
-	}
+	public record ChunkCoord(int x, int z) {}
 }
