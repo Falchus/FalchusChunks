@@ -11,7 +11,7 @@ import org.bukkit.World;
 import org.bukkit.entity.Player;
 
 import com.falchus.chunks.Main;
-import com.falchus.lib.task.Task;
+import com.falchus.lib.minecraft.spigot.task.SpigotTask;
 
 public class GenerateTask implements Runnable {
 	
@@ -64,8 +64,8 @@ public class GenerateTask implements Runnable {
     	player.setGameMode(GameMode.SPECTATOR);
     	player.sendMessage(Main.prefix + "Generating §a" + total + " §7chunks. Do not leave!");
     	
-    	taskId = Task
-    			.runTimer(this, 100, TimeUnit.MILLISECONDS)
+    	taskId = SpigotTask.of(this)
+    			.runTimer(100, TimeUnit.MILLISECONDS)
     			.getId();
     }
 	
@@ -97,7 +97,7 @@ public class GenerateTask implements Runnable {
 	}
 	
 	private void finish() {
-		Task.end(taskId);
+		SpigotTask.end(taskId);
 		
 		player.teleport(originalLocation);
 		player.setGameMode(originalGamemode);
