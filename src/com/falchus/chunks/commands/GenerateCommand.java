@@ -1,5 +1,8 @@
 package com.falchus.chunks.commands;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.bukkit.entity.Player;
 
 import com.falchus.chunks.Main;
@@ -34,5 +37,22 @@ public class GenerateCommand extends SpigotCommandAdapter {
 		}
 		
 		new GenerateTask(player, radius, unloadable).start();
+	}
+	
+	@Override
+	public List<String> tabComplete(Object sender, String[] args) {
+		List<String> completions = new ArrayList<>();
+		switch (args.length) {
+			case 2:
+				completions.addAll(List.of(
+					"true",
+					"false"
+				));
+				break;
+				
+			default:
+				break;
+		}
+		return completions;
 	}
 }
