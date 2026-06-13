@@ -15,7 +15,7 @@ import com.falchus.lib.minecraft.spigot.task.SpigotTask;
 
 public class GenerateTask implements Runnable {
 	
-	private final Main plugin = Main.getInstance();
+	private static final Main plugin = Main.getInstance();
 	
 	private int taskId;
 	

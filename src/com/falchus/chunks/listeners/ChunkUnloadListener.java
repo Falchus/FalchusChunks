@@ -11,7 +11,7 @@ import com.falchus.chunks.tasks.GenerateTask.ChunkCoord;
 
 public class ChunkUnloadListener implements Listener {
 
-	private final Main plugin = Main.getInstance();
+	private static final Main plugin = Main.getInstance();
 	
 	public ChunkUnloadListener() {
 		Bukkit.getPluginManager().registerEvents(this, plugin);
