@@ -13,21 +13,25 @@ import org.bukkit.entity.Player;
 import com.falchus.chunks.Main;
 import com.falchus.lib.minecraft.spigot.task.SpigotTask;
 
+import lombok.AccessLevel;
+import lombok.experimental.FieldDefaults;
+
+@FieldDefaults(level = AccessLevel.PRIVATE)
 public class GenerateTask implements Runnable {
 	
 	private static final Main plugin = Main.getInstance();
 	
 	private int taskId;
 	
-	private final Player player;
-	private final boolean unloadable;
+	final Player player;
+	final boolean unloadable;
 	
-	private final Queue<ChunkCoord> queue = new ArrayDeque<>();
-	private final Location originalLocation;
-	private final GameMode originalGamemode;
+	final Queue<ChunkCoord> queue = new ArrayDeque<>();
+	final Location originalLocation;
+	final GameMode originalGamemode;
 
-	private final int total;
-	private int processed = 0;
+	final int total;
+	int processed;
 
     public GenerateTask(Player player, int radius, boolean unloadable) {
         this.player = player;
