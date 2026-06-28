@@ -25,7 +25,7 @@ public class Main extends JavaPlugin {
 	public static final String serverLowerCase = server.toLowerCase();
 	public static final String serverFull = server + "Chunks";
 	public static final String colorcode = "§f§l";
-	public static String prefix = "§8» " + colorcode + serverFull + "§r §8┃ §7";
+	public static final String prefix = "§8» " + colorcode + serverFull + "§r §8┃ §7";
 	public static final String prefixPermission = serverLowerCase + ".";
 	public static final String noPermissionMessage = prefix + "§cInsufficient permissions!";
 	
