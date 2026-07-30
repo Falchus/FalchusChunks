@@ -11,9 +11,9 @@ depend: [FalchusLib]
 
 commands:
   generate:
-    permission: falchus.generate
+    permission: falchus.chunks.generate
     aliases: [gen]
 
 permissions:
-  falchus.generate:
+  falchus.chunks.generate:
     default: op
