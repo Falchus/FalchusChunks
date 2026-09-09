@@ -1,6 +1,5 @@
 package com.falchus.chunks;
 
-import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import com.falchus.chunks.commands.*;
@@ -34,11 +33,9 @@ public class Main extends JavaPlugin {
 		instance = this;
 		new Metrics(this, 29228);
 
-		Bukkit.getScheduler().runTask(this, () -> {
-			chunkUnloadListener = new ChunkUnloadListener();
-			chunkManager = new ChunkManager();
-			
-			getCommand("generate").setExecutor(new GenerateCommand());
-		});
+		chunkUnloadListener = new ChunkUnloadListener();
+		chunkManager = new ChunkManager();
+		
+		getCommand("generate").setExecutor(new GenerateCommand());
 	}
 }
