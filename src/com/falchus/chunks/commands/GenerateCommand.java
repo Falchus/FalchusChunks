@@ -12,13 +12,13 @@ import com.falchus.lib.minecraft.command.impl.SpigotCommandAdapter;
 public class GenerateCommand extends SpigotCommandAdapter {
 	
 	public GenerateCommand() {
-		super(Main.prefixPermission + "generate", Main.noPermissionMessage, Main.prefix + "§cUsage: /generate <radius> [unloadable]");
+		super(Main.prefixPermission + "generate", Main.noPermissionMessage, Main.prefix + "§cUsage: /generate <radius> [teleport] [unloadable]");
 	}
 
 	@Override
 	public void executeCommand(Object sender, String[] args) {
 		if (!(sender instanceof Player player)) return;
-		if (args.length != 1 && args.length != 2) {
+		if (args.length < 1 || args.length > 3) {
 			sendMessage(sender, getUsageMessage());
 			return;
 		}
@@ -31,12 +31,10 @@ public class GenerateCommand extends SpigotCommandAdapter {
 			return;
 		}
 		
-		boolean unloadable = true;
-		if (args.length == 2) {
-			unloadable = Boolean.parseBoolean(args[1]);
-		}
+		boolean teleport = args.length >= 2 && Boolean.parseBoolean(args[1]);
+		boolean unloadable = args.length < 3 || Boolean.parseBoolean(args[2]);
 		
-		new GenerateTask(player, radius, unloadable).start();
+		new GenerateTask(player, radius, teleport, unloadable).start();
 	}
 	
 	@Override
@@ -44,6 +42,7 @@ public class GenerateCommand extends SpigotCommandAdapter {
 		List<String> completions = new ArrayList<>();
 		switch (args.length) {
 			case 2:
+			case 3:
 				completions.addAll(List.of(
 					"true",
 					"false"

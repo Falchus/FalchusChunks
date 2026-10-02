@@ -11,7 +11,9 @@ import org.bukkit.World;
 import org.bukkit.entity.Player;
 
 import com.falchus.chunks.Main;
+import com.falchus.lib.enums.TaskPriority;
 import com.falchus.lib.minecraft.spigot.task.SpigotTask;
+import com.falchus.lib.minecraft.spigot.utils.WorldUtils;
 
 import lombok.AccessLevel;
 import lombok.experimental.FieldDefaults;
@@ -24,6 +26,8 @@ public class GenerateTask implements Runnable {
 	private int taskId;
 	
 	final Player player;
+	final World world;
+	final boolean teleport;
 	final boolean unloadable;
 	
 	final Queue<ChunkCoord> queue = new ArrayDeque<>();
@@ -33,14 +37,15 @@ public class GenerateTask implements Runnable {
 	final int total;
 	int processed;
 
-    public GenerateTask(Player player, int radius, boolean unloadable) {
+    public GenerateTask(Player player, int radius, boolean teleport, boolean unloadable) {
         this.player = player;
+        world = player.getWorld();
+        this.teleport = teleport;
         this.unloadable = unloadable;
         
         int chunkRadius = radius >> 4;
         int cx = player.getLocation().getBlockX() >> 4;
         int cz = player.getLocation().getBlockZ() >> 4;
-        World world = player.getWorld();
         int viewDistance = Bukkit.getViewDistance();
         for (int x = -chunkRadius; x <= chunkRadius; x++) {
             for (int z = -chunkRadius; z <= chunkRadius; z++) {
@@ -52,7 +57,7 @@ public class GenerateTask implements Runnable {
             	
             	if (world.isChunkLoaded(targetX, targetZ)) continue;
             	
-            	if (Math.abs(x) > viewDistance && Math.abs(z) > viewDistance) {
+            	if (!teleport || (Math.abs(x) > viewDistance && Math.abs(z) > viewDistance)) {
             		queue.add(coord);
             	}
             }
@@ -65,8 +70,10 @@ public class GenerateTask implements Runnable {
     }
     
     public void start() {
-    	player.setGameMode(GameMode.SPECTATOR);
-    	player.sendMessage(Main.prefix + "Generating §a" + total + " §7chunks. Do not leave!");
+    	if (teleport) {
+    		player.setGameMode(GameMode.SPECTATOR);
+    	}
+    	player.sendMessage(Main.prefix + "Generating §a" + total + " §7chunks." + (teleport ? " Do not leave!" : ""));
     	
     	taskId = SpigotTask.of(this)
     			.runTimer(100, TimeUnit.MILLISECONDS)
@@ -84,10 +91,14 @@ public class GenerateTask implements Runnable {
         
         int bx = (coord.x << 4) + 8;
         int bz = (coord.z << 4) + 8;
-        int y = 100;
+        Location location = new Location(world, bx + 0.5, 100, bz + 0.5);
         
-        Bukkit.dispatchCommand(Bukkit.getConsoleSender(), (Bukkit.getName().equals("FalchusSpigot") ? "falchus" : "") + "spigot:tp " + player.getName() + " " + (bx + 0.5) + " " + y + " " + (bz + 0.5)); // async in FalchusSpigot
-
+        if (teleport) {
+        	Bukkit.dispatchCommand(Bukkit.getConsoleSender(), (Bukkit.getName().equals("FalchusSpigot") ? "falchus" : "") + "spigot:tp " + player.getName() + " " + location.getX() + " " + location.getY() + " " + location.getZ()); // async in FalchusSpigot
+        } else {
+        	WorldUtils.getChunkAtAsync(world, location, true, TaskPriority.NORMAL);
+        }
+        
         if (!unloadable) {
             plugin.getChunkManager().getChunks().add(coord);
         }
@@ -103,8 +114,10 @@ public class GenerateTask implements Runnable {
 	private void finish() {
 		SpigotTask.end(taskId);
 		
-		player.teleport(originalLocation);
-		player.setGameMode(originalGamemode);
+		if (teleport) {
+			player.teleport(originalLocation);
+			player.setGameMode(originalGamemode);
+		}
 		
 		player.sendMessage(Main.prefix + "Generated §a" + processed + " §7chunks.");
 	}
